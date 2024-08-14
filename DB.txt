@@ -1,0 +1,47 @@
+CREATE DATABASE IF NOT EXISTS student_registration;
+
+USE student_registration;
+
+-- Bảng User
+CREATE TABLE IF NOT EXISTS users (
+    userID INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
+-- Bảng Course
+CREATE TABLE IF NOT EXISTS courses (
+    courseID INT AUTO_INCREMENT PRIMARY KEY,
+    courseName VARCHAR(255) NOT NULL,
+    credit INT NOT NULL
+);
+
+-- Bảng Registration
+CREATE TABLE IF NOT EXISTS registrations (
+    registrationID INT AUTO_INCREMENT PRIMARY KEY,
+    userID INT,
+    courseID INT,
+    registrationDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userID) REFERENCES users(userID),
+    FOREIGN KEY (courseID) REFERENCES courses(courseID)
+);
+
+-- Thêm dữ liệu mẫu vào bảng User
+INSERT INTO users (email, password, name) VALUES 
+('student1@example.com', 'student1pass', 'Student One'),
+('student2@example.com', 'student2pass', 'Student Two');
+
+-- Thêm dữ liệu mẫu vào bảng Course
+INSERT INTO courses (courseName, credit) VALUES
+('Mathematics', 3),
+('Physics', 4),
+('Chemistry', 3),
+('Biology', 2),
+('History', 3);
+
+-- Thêm dữ liệu mẫu vào bảng Registration
+INSERT INTO registrations (userID, courseID) VALUES 
+(1, 1),
+(1, 3),
+(2, 2);
